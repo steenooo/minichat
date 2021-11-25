@@ -1,0 +1,6 @@
+name: MiniChat
+version: '${project.version}'
+main: dev.steyn.minichat.MiniChatPlugin
+api-version: 1.17
+depend: [ LuckPerms ]
+authors: [ steenooo ]
