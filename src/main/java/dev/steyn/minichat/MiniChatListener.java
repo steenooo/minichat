@@ -15,7 +15,7 @@ public class MiniChatListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onChat(AsyncChatEvent event) {
-        event.renderer(new MiniChatRenderer(plugin.getLuckPerms()));
+        event.renderer(plugin.getRenderer());
     }
 
 

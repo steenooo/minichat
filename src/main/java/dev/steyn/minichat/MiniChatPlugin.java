@@ -1,6 +1,6 @@
 package dev.steyn.minichat;
 
-import java.nio.Buffer;
+import io.papermc.paper.chat.ChatRenderer;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Bukkit;
@@ -11,10 +11,14 @@ public final class MiniChatPlugin extends JavaPlugin {
 
     private LuckPerms luckPerms;
 
+    private ChatRenderer renderer;
     public static MiniChatPlugin getInstance() {
         return JavaPlugin.getPlugin(MiniChatPlugin.class);
     }
 
+    public ChatRenderer getRenderer() {
+        return renderer;
+    }
 
     public LuckPerms getLuckPerms() {
         return luckPerms;
@@ -23,6 +27,7 @@ public final class MiniChatPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         luckPerms = LuckPermsProvider.get();
+        this.renderer = new MiniChatRenderer(luckPerms);
         Bukkit.getPluginManager().registerEvents(new MiniChatListener(this), this);
     }
 
