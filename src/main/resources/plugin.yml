@@ -4,3 +4,6 @@ main: dev.steyn.minichat.MiniChatPlugin
 api-version: 1.17
 depend: [ LuckPerms ]
 authors: [ steenooo ]
+#
+#libraries:
+#  - net.kyori:adventure-text-minimessage:${minimessage.version}
