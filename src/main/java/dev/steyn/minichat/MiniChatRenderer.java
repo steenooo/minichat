@@ -42,10 +42,10 @@ public class MiniChatRenderer implements ChatRenderer {
         }
         Component prefix = Optional.ofNullable(metaData.getPrefix()).map(this::parse).orElse(Component.empty());
         Component suffix = Optional.ofNullable(metaData.getSuffix()).map(this::parse).orElse(Component.empty());
-
+        MiniChatPlugin.getInstance().getLogger().info(message.toString());
         return MINI_MESSAGE.parse(format,
             Arrays.asList(
-                Template.of("name", sourceDisplayName),
+                Template.of("name", source.name()),
                 Template.of("prefix", prefix),
                 Template.of("suffix", suffix),
                 Template.of("message", message)
