@@ -6,11 +6,12 @@
 
   <groupId>dev.steyn</groupId>
   <artifactId>minichat</artifactId>
-  <version>1.0</version>
+  <version>1.0.0</version>
   <packaging>jar</packaging>
 
   <name>MiniChat</name>
 
+  
   <dependencies>
     <dependency>
       <groupId>net.luckperms</groupId>
@@ -29,7 +30,6 @@
       <version>${paper.version}</version>
       <scope>provided</scope>
     </dependency>
-
   </dependencies>
 
   <build>
