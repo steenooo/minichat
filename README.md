@@ -16,7 +16,7 @@ MiniMessage format!
 minichat:
   format:
     key: minichat.meta # The Meta key used to retrieve the chat format for the user.
-    fallback: "<gray><name>: <message></gray>" #If no format is available, this format will be ued.
+    fallback: "<gray><name>: <message></gray>" #If no format is available, this format will be used.
 ```
 
 ### Meta Examples
