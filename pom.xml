@@ -11,11 +11,26 @@
 
   <name>MiniChat</name>
 
-  <properties>
-    <java.version>17</java.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <minimessage.version>4.1.0-SNAPSHOT</minimessage.version>
-  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>net.luckperms</groupId>
+      <artifactId>api</artifactId>
+      <version>${luckperms.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.kyori</groupId>
+      <artifactId>adventure-text-minimessage</artifactId>
+      <version>${minimessage.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.papermc.paper</groupId>
+      <artifactId>paper-api</artifactId>
+      <version>${paper.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+  </dependencies>
 
   <build>
     <plugins>
@@ -64,23 +79,19 @@
     </repository>
   </repositories>
 
-  <dependencies>
-      <dependency>
-        <groupId>net.luckperms</groupId>
-        <artifactId>api</artifactId>
-        <version>5.3</version>
-        <scope>provided</scope>
-      </dependency>
-    <dependency>
-      <groupId>net.kyori</groupId>
-      <artifactId>adventure-text-minimessage</artifactId>
-      <version>${minimessage.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.papermc.paper</groupId>
-      <artifactId>paper-api</artifactId>
-      <version>1.17.1-R0.1-SNAPSHOT</version>
-      <scope>provided</scope>
-    </dependency>
-  </dependencies>
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>minichat</name>
+      <url>https://maven.pkg.github.com/steenooo/minichat</url>
+    </repository>
+  </distributionManagement>
+  <properties>
+    <java.version>17</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <minimessage.version>4.1.0-SNAPSHOT</minimessage.version>
+    <luckperms.version>5.3</luckperms.version>
+    <paper.version>1.17.1-R0.1-SNAPSHOT</paper.version>
+  </properties>
+
 </project>
