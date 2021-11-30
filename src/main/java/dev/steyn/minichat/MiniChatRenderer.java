@@ -1,33 +1,26 @@
 package dev.steyn.minichat;
 
 import io.papermc.paper.chat.ChatRenderer;
-import java.util.Arrays;
+import io.papermc.paper.event.player.AsyncChatEvent;
 import java.util.Objects;
-import java.util.Optional;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.Template;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.cacheddata.CachedMetaData;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
-public class MiniChatRenderer implements ChatRenderer {
+public class MiniChatRenderer implements ChatRenderer, Listener {
 
-
-    private final static MiniMessage MINI_MESSAGE = MiniMessage.get();
-    private final static PlainTextComponentSerializer TEXT = PlainTextComponentSerializer.plainText();
-    private final static LegacyComponentSerializer SERIALIZER = LegacyComponentSerializer.legacy(
-        '&');
     private final LuckPerms luckPerms;
+    private final MiniChatPlugin plugin;
 
-    public MiniChatRenderer(LuckPerms luckPerms) {
+    public MiniChatRenderer(LuckPerms luckPerms, MiniChatPlugin plugin) {
         this.luckPerms = luckPerms;
-
+        this.plugin = plugin;
     }
 
     @Override
@@ -36,26 +29,18 @@ public class MiniChatRenderer implements ChatRenderer {
         CachedMetaData metaData = Objects.requireNonNull(
                 luckPerms.getUserManager().getUser(source.getUniqueId())).getCachedData()
             .getMetaData();
-        String format = metaData.getMetaValue("format");
-        if(format == null) {
-            return Component.join(Component.text(": "), sourceDisplayName, message).color(
-                NamedTextColor.GRAY);
+        String format = metaData.getMetaValue(plugin.getMetaKey());
+        if (format == null) {
+            format = plugin.getFallbackFormat();
         }
-        Component prefix = Optional.ofNullable(metaData.getPrefix()).map(this::parse).orElse(Component.empty());
-        Component suffix = Optional.ofNullable(metaData.getSuffix()).map(this::parse).orElse(Component.empty());
-        return MINI_MESSAGE.parse(format,
-            Arrays.asList(
-                Template.of("name", source.getName()),
-                Template.of("prefix", prefix),
-                Template.of("suffix", suffix),
-                Template.of("message", TEXT.serialize(message))
-            ));
+        return MiniChatPlugin.MINI_MESSAGE.parse(format,
+            plugin.getRegistry().handle(source, message, viewer));
     }
 
-    private Component parse(String input) {
-        if(input.contains("&")) {
-            return SERIALIZER.deserialize(input);
-        }
-        return MINI_MESSAGE.parse(input);
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onChat(AsyncChatEvent event) {
+        event.renderer(this);
     }
+
 }

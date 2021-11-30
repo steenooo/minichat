@@ -1,0 +1,4 @@
+minichat:
+  format:
+    key: minichat.meta
+    fallback: "<gray><name>: <message></gray>"
