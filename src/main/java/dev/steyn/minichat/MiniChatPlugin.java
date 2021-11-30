@@ -70,7 +70,7 @@ public final class MiniChatPlugin extends JavaPlugin implements Listener {
         FileConfiguration config = getConfig();
         this.fallbackFormat = config.getString("minichat.format.fallback",
             "<gray><name>: <message></gray>");
-        this.metaKey = config.getString("minichat.format.meta", "minichat.format");
+        this.metaKey = config.getString("minichat.format.key", "minichat.format");
     }
 
     private void registerDefaults() {
