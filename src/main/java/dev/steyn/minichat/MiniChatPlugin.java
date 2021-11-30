@@ -13,11 +13,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.server.ServerLoadEvent;
+import org.bukkit.event.server.ServerLoadEvent.LoadType;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class MiniChatPlugin extends JavaPlugin {
+public final class MiniChatPlugin extends JavaPlugin implements Listener {
 
 
     private LuckPerms luckPerms;
@@ -27,7 +31,6 @@ public final class MiniChatPlugin extends JavaPlugin {
     private final MiniChatManager registry = new MiniChatManager();
     private String metaKey;
     private String fallbackFormat;
-    private boolean started = false;
 
     public String getMetaKey() {
         return metaKey;
@@ -51,23 +54,19 @@ public final class MiniChatPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        if (started) {
-            getLog4JLogger().warn(
-                "MiniChat does not support reloads. Please restart asap to avoid problems");
-        }
         ServicesManager manager = Bukkit.getServicesManager();
         this.luckPerms = Objects.requireNonNull(manager.getRegistration(LuckPerms.class))
             .getProvider();
         Bukkit.getPluginManager().registerEvents(new MiniChatRenderer(luckPerms, this), this);
+        Bukkit.getPluginManager().registerEvents(this, this);
         manager.register(MiniChat.class, registry, this, ServicePriority.High);
         registerDefaults();
         readConfig();
-        started = true;
-
         getSLF4JLogger().info("MiniChat {} is enabled!", this.getDescription().getVersion());
     }
 
     private void readConfig() {
+        saveDefaultConfig();
         FileConfiguration config = getConfig();
         this.fallbackFormat = config.getString("minichat.format.fallback",
             "<gray><name>: <message></gray>");
@@ -105,5 +104,12 @@ public final class MiniChatPlugin extends JavaPlugin {
         return Component.empty();
     }
 
+    @EventHandler
+    public void onReload(ServerLoadEvent e) {
+        if (e.getType() == LoadType.RELOAD) {
+            getLog4JLogger().warn(
+                "MiniChat does not support reloads. Please restart asap to avoid problems");
+        }
+    }
 
 }
