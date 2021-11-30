@@ -21,8 +21,11 @@ minichat:
 
 ### Meta Examples
 
-``/lp group admin meta set minichat.format "<white>[</white><dark_red>ADMIN</dark_red><white>]</white> <red><name></red>: <white><message></white>"``
-``/lp group default meta set minichat.format "<gray>[Member] <name>: <message></gray>``
+```
+/lp group admin meta set minichat.format "<white>[</white><dark_red>ADMIN</dark_red><white>]</white> <red><name></red>: <white><message></white>"
+/lp group default meta set minichat.format "<gray>[Member] <name>: <message></gray>
+```
+
 
 ### Default Placeholders
 
