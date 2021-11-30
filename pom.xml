@@ -11,7 +11,15 @@
 
   <name>MiniChat</name>
 
-  
+  <properties>
+    <java.version>16</java.version>
+    <luckperms.version>5.3</luckperms.version>
+    <minimessage.version>4.1.0-SNAPSHOT</minimessage.version>
+    <paper.version>1.17.1-R0.1-SNAPSHOT</paper.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+
   <dependencies>
     <dependency>
       <groupId>net.luckperms</groupId>
@@ -86,12 +94,4 @@
       <url>https://maven.pkg.github.com/steenooo/minichat</url>
     </repository>
   </distributionManagement>
-  <properties>
-    <java.version>17</java.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <minimessage.version>4.1.0-SNAPSHOT</minimessage.version>
-    <luckperms.version>5.3</luckperms.version>
-    <paper.version>1.17.1-R0.1-SNAPSHOT</paper.version>
-  </properties>
-
 </project>

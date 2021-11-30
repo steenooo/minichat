@@ -62,7 +62,7 @@ MiniChat is available through GitHub packages.
 <dependency>
   <groupId>dev.steyn</groupId>
   <artifactId>minichat</artifactId>
-  <version>1.0</version>
+  <version>1.0.0</version>
 </dependency>
 ```
 
