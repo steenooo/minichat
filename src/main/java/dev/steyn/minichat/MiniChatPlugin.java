@@ -26,7 +26,6 @@ public final class MiniChatPlugin extends JavaPlugin implements Listener {
 
     private LuckPerms luckPerms;
     public final static MiniMessage MINI_MESSAGE = MiniMessage.get();
-    // public final static PlainTextComponentSerializer TEXT = PlainTextComponentSerializer.plainText();
     public final static LegacyComponentSerializer LEGACY = LegacyComponentSerializer.legacyAmpersand();
     private final MiniChatManager registry = new MiniChatManager();
     private String metaKey;
@@ -74,10 +73,8 @@ public final class MiniChatPlugin extends JavaPlugin implements Listener {
     }
 
     private void registerDefaults() {
-        registry.addPlaceholder(this, "name", Player::name, "username");
         registry.addPlaceholder(this, "displayName",
             (Function<Player, Component>) Player::displayName);
-        registry.addPlaceholder(this, "message", (p, m, a) -> m, "msg", "contents");
         registry.addPlaceholder(this, "prefix", p -> getMeta(p, CachedMetaData::getPrefix));
         registry.addPlaceholder(this, "suffix", p -> getMeta(p, CachedMetaData::getSuffix));
         registry.addPlaceholder(this, "teamDisplayName", Entity::teamDisplayName);

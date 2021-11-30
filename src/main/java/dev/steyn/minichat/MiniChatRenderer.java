@@ -2,9 +2,12 @@ package dev.steyn.minichat;
 
 import io.papermc.paper.chat.ChatRenderer;
 import io.papermc.paper.event.player.AsyncChatEvent;
+import java.util.List;
 import java.util.Objects;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.Template;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.cacheddata.CachedMetaData;
 import org.bukkit.entity.Player;
@@ -17,6 +20,8 @@ public class MiniChatRenderer implements ChatRenderer, Listener {
 
     private final LuckPerms luckPerms;
     private final MiniChatPlugin plugin;
+
+    private static final PlainTextComponentSerializer TEXT = PlainTextComponentSerializer.plainText();
 
     public MiniChatRenderer(LuckPerms luckPerms, MiniChatPlugin plugin) {
         this.luckPerms = luckPerms;
@@ -33,8 +38,13 @@ public class MiniChatRenderer implements ChatRenderer, Listener {
         if (format == null) {
             format = plugin.getFallbackFormat();
         }
-        return MiniChatPlugin.MINI_MESSAGE.parse(format,
-            plugin.getRegistry().handle(source, message, viewer));
+        List<Template> templates = plugin.getRegistry().handle(source, message, viewer);
+        templates.add(Template.of("name", source.getName()));
+        String msg = TEXT.serialize(message);
+        templates.add(Template.of("msg", msg));
+        templates.add(Template.of("message",
+            msg)); // fancy tags such as rainbow and gradient don't work unless plain text.
+        return MiniChatPlugin.MINI_MESSAGE.parse(format, templates);
     }
 
 
